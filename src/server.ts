@@ -3,6 +3,7 @@ import { createAppInstance } from "./app";
 import { IDatabase } from "./repositories/interfaces/IDatabase";
 import { MongoDB } from "./repositories/MongoDB";
 import { BASE_URL, MONGODB_URI } from "../environment/config";
+import logger from "./utils/logger.util";
 
 const port: number = normalizePort(BASE_URL) || 3000;
 
@@ -55,11 +56,11 @@ function onError(error: NodeJS.ErrnoException): void {
 
   switch (error.code) {
     case "EACCES":
-      console.error(`${bind} requires elevated privileges`);
+      logger.error(`${bind} requires elevated privileges`);
       process.exit(1);
       break;
     case "EADDRINUSE":
-      console.error(`${bind} is already in use`);
+      logger.error(`${bind} is already in use`);
       process.exit(1);
       break;
     default:
