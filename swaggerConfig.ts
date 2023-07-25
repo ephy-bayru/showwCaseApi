@@ -19,6 +19,7 @@ const swaggerOptions = {
       },
     },
     apis: [
+      "./src/components/health/v1/health.routes.ts",
     ],
 };
 
