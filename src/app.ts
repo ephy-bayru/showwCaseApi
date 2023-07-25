@@ -45,7 +45,7 @@ class AppBuilder {
   setupRoutes(): AppBuilder {
     this.app.use("/api", routes);
     this.app.get("/", (req, res) => {
-      res.redirect("/api/health");
+      res.redirect("/api/v1/health");
     });
 
     // Universal route

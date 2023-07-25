@@ -20,7 +20,7 @@ const asyncHandler = (fn: Function) => {
 
 /**
  * @swagger
- * /health:
+ * /v1/health:
  *   get:
  *     summary: Returns the current health status of the application.
  *     tags: [Health]
