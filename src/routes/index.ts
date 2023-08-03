@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import healthRoutes from '../components/health/v1/health.routes';
+import usersRoutes from '../components/users/web/users.routes';
+import educationExperienceRoutes from '../components/education_experience/web/education_experience.routes';
 
 interface Route {
   path: string;
@@ -8,6 +10,8 @@ interface Route {
 
 const routes: Route[] = [
   { path: '/v1/health', handler: healthRoutes },
+  { path: '/v1/users', handler: usersRoutes },
+  { path: '/v1/education-experiences', handler: educationExperienceRoutes }
 ];
 
 const createRouter = (routes: Route[]): Router => {

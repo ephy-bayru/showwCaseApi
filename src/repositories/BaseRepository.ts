@@ -1,5 +1,7 @@
 import { FilterQuery, Model, Document, QueryOptions } from "mongoose";
-import IBaseRepository from "./interfaces/IBaseRepository";
+import IBaseRepository, {
+  RepositoryOptions,
+} from "./interfaces/IBaseRepository";
 
 class BaseRepository<T extends Document> implements IBaseRepository<T> {
   private _model: Model<T>;
@@ -17,23 +19,42 @@ class BaseRepository<T extends Document> implements IBaseRepository<T> {
     return await newEntity.save();
   }
 
-  async updateById(id: string, entity: Partial<T>): Promise<T | null> {
-    return await this.model.findByIdAndUpdate(id, entity, { new: true });
+  async bulkCreate(entities: Partial<T>[]): Promise<T[]> {
+    return (await this.model.insertMany(entities)) as unknown as T[];
   }
 
-  async getById(id: string): Promise<T | null> {
-    return await this.model.findById(id);
+  async updateById(params: {
+    id: string;
+    entity: Partial<T>;
+    options?: RepositoryOptions;
+  }): Promise<T | null> {
+    return await this.model.findByIdAndUpdate(params.id, params.entity, {
+      new: true,
+    });
   }
 
-  async deleteById(id: string): Promise<T | null> {
-    return await this.model.findByIdAndDelete(id);
+  async getById(params: {
+    id: string;
+    options?: RepositoryOptions;
+  }): Promise<T | null> {
+    return await this.model.findById(params.id);
   }
 
-  async getAll(): Promise<T[]> {
+  async deleteById(params: {
+    id: string;
+    options?: RepositoryOptions;
+  }): Promise<T | null> {
+    return await this.model.findByIdAndDelete(params.id);
+  }
+
+  async getAll(options?: RepositoryOptions): Promise<T[]> {
     return await this.model.find();
   }
 
-  async search(query: FilterQuery<T>, options?: QueryOptions): Promise<T[]> {
+  async search(
+    query: FilterQuery<T>,
+    options?: QueryOptions & RepositoryOptions
+  ): Promise<T[]> {
     return await this.model.find(query, null, options);
   }
 
@@ -48,7 +69,7 @@ class BaseRepository<T extends Document> implements IBaseRepository<T> {
 
   async findOne(
     query: FilterQuery<T>,
-    options?: QueryOptions
+    options?: QueryOptions & RepositoryOptions
   ): Promise<T | null> {
     return await this.model.findOne(query, null, options);
   }

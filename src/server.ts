@@ -4,6 +4,7 @@ import { IDatabase } from "./repositories/interfaces/IDatabase";
 import { MongoDB } from "./repositories/MongoDB";
 import { BASE_URL, MONGODB_URI } from "../environment/config";
 import logger from "./utils/logger.util";
+import seedDatabase from "./middlewares/seedData.middleware";
 
 const port: number = normalizePort(BASE_URL) || 3000;
 
@@ -11,6 +12,10 @@ export async function startServer() {
   const app = setupApp();
   const database = setupDatabase();
   await connectDatabase(database);
+
+  // Uncomment the following line when you want to seed the database
+  // await seedDatabase();
+    
   startHttpServer(app);
 }
 

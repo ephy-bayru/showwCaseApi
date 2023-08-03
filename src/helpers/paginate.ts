@@ -1,6 +1,7 @@
 import { IPaginatedData } from "../interfaces/IPaginatedData";
 import { IPaginationOptions } from "../interfaces/IPaginationOptions";
 import { getPaginationMetadata } from "./pagination.helper";
+import CustomError from "../error/CustomError";
 
 function filterData<T>(
   data: T[],
@@ -38,7 +39,13 @@ function sortData<T>(
         ? valueA.localeCompare(valueB)
         : valueB.localeCompare(valueA);
     } else {
-      throw new Error(`Unsupported type for sorting: ${typeof valueA}`);
+      throw new CustomError(
+        400,
+        `Unsupported type for sorting: ${typeof valueA}`,
+        `The field '${String(
+          sortBy
+        )}' cannot be used for sorting as it is not a number or string.`
+      );
     }
   });
 }

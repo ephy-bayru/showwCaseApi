@@ -1,5 +1,6 @@
 import { Request } from "express";
 import { IPaginationOptions, SortOrder } from "../interfaces/IPaginationOptions";
+import BaseModel from "../interfaces/BaseModel";
 
 export function getPaginationOptions<T extends BaseModel>(req: Request): IPaginationOptions<T> {
   const page = Math.max(1, Number(req.query.page) || 1);

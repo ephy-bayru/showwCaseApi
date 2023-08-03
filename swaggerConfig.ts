@@ -1,26 +1,35 @@
+import { educationExperienceSwaggerDefinitions, educationExperienceSwaggerPaths } from "./src/components/education_experience/web/educationExperience.swagger";
+import { usersSwaggerDefinitions, usersSwaggerPaths } from "./src/components/users/web/users.swagger";
+
 const swaggerOptions = {
-    definition: {
-      openapi: "3.0.0",
-      info: {
-        title: "Showwcase API",
-        version: "1.0.0",
-        description: "API for managing Users experiance",
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Showwcase API",
+      version: "1.0.0",
+      description: "API for managing Users and Education Experiences",
+    },
+    servers: [
+      {
+        url: "http://localhost:3000/api",
       },
-      servers: [
-        {
-          url: "http://localhost:3000/api",
-        },
-      ],
-      components: {
-        schemas: {
-        },
-      },
-      paths: {
+    ],
+    components: {
+      schemas: {
+        ...usersSwaggerDefinitions,
+        ...educationExperienceSwaggerDefinitions,
       },
     },
-    apis: [
-      "./src/components/health/v1/health.routes.ts",
-    ],
+    paths: {
+      ...usersSwaggerPaths,
+      ...educationExperienceSwaggerPaths,
+    },
+  },
+  apis: [
+    "./src/components/health/v1/health.routes.ts",
+    "./src/components/users/v1/users.routes.ts",
+    "./src/components/educationExperience/v1/educationExperience.routes.ts",
+  ],
 };
 
 export default swaggerOptions;
