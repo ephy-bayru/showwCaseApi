@@ -12,6 +12,11 @@ export const usersSwaggerDefinitions = {
         type: "string",
         description: "The phone number of the user",
       },
+      role: {
+        type: "string",
+        enum: ["User", "Admin"],
+        description: "The role of the user",
+      },
       address: {
         type: "object",
         properties: {
@@ -50,6 +55,10 @@ export const usersSwaggerDefinitions = {
       deleted: {
         type: "boolean",
         description: "The deletion status of the user",
+      },
+      suspended: {
+        type: "boolean",
+        description: "The suspension status of the user",
       },
     },
   },
