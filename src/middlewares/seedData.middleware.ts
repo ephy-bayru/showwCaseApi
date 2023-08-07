@@ -7,6 +7,10 @@ import { IUser } from "../components/users/data/interfaces/IUser";
 import UserModel from "../components/users/data/schemas/UserModel";
 import { hashPassword } from "../helpers/passwordHash";
 
+import {
+  UserRole,
+} from "../components/users/data/interfaces/IUser";
+
 const users: Partial<IUser>[] = [
   {
     email: "john.doe@example.com",
@@ -15,6 +19,7 @@ const users: Partial<IUser>[] = [
     lastName: "Doe",
     gender: "Male",
     phoneNumber: "123456789",
+    role: UserRole.User,
     address: {
       country: "USA",
       stateOrProvince: "New York",
@@ -31,6 +36,7 @@ const users: Partial<IUser>[] = [
     lastName: "Doe",
     gender: "Female",
     phoneNumber: "987654321",
+    role: UserRole.User,
     address: {
       country: "USA",
       stateOrProvince: "California",
