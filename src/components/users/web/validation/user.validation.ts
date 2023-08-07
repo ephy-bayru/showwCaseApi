@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { IUser } from "../../data/interfaces/IUser";
+import { IUser, UserRole } from "../../data/interfaces/IUser";
 
 export const validateUser = (user: Partial<IUser>) => {
   const schema = Joi.object({
@@ -32,15 +32,23 @@ export const validateUser = (user: Partial<IUser>) => {
       "string.empty": "Phone Number cannot be empty",
       "any.required": "Phone Number is required",
     }),
+    role: Joi.string()
+      .valid(UserRole.User, UserRole.Admin)
+      .required()
+      .messages({
+        "string.empty": "Role cannot be empty",
+        "any.only": "Role must be 'User' or 'Admin'",
+        "any.required": "Role is required",
+      }),
     address: Joi.object({
-        country: Joi.string().required(),
-        stateOrProvince: Joi.string().required(),
-        city: Joi.string().required(),
-        district: Joi.string().optional(),
-        streetAddress: Joi.string().required(),
-        postalCode: Joi.string().required(),
-      }).required(),
-      
+      country: Joi.string().required(),
+      stateOrProvince: Joi.string().required(),
+      city: Joi.string().required(),
+      district: Joi.string().optional(),
+      streetAddress: Joi.string().required(),
+      postalCode: Joi.string().required(),
+    }).required(),
+    suspended: Joi.boolean().optional().default(false),
   });
 
   return schema.validate(user);

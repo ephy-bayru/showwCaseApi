@@ -38,8 +38,12 @@ class UsersController {
     next: NextFunction
   ): Promise<void> {
     const user: IUser = req.body;
-    const validationResults = validateUser(user);
 
+    console.log("User object:", user);
+    const validationResults = validateUser(user);
+    console.log("Validation results:", validationResults);
+
+    
     if (validationResults.error) {
       throw new CustomError(
         400,

@@ -6,6 +6,7 @@ import { paginate } from "../../../helpers/paginate";
 import { IPaginatedData } from "../../../interfaces/IPaginatedData";
 import { IPaginationOptions } from "../../../interfaces/IPaginationOptions";
 import EducationExperienceService from "../../education_experience/services/educationExperience.service";
+import { hashPassword } from "../../../helpers/passwordHash";
 
 class UsersService {
   private usersRepository: UsersRepository;
@@ -26,6 +27,10 @@ class UsersService {
   }
 
   async createUser(user: Partial<IUser>): Promise<IUser> {
+    if (user.password) {
+      const hashedPassword = await hashPassword(user.password);
+      user.password = hashedPassword;
+    }
     await this.validateUserDuplication(user);
     const createdUser = await this.usersRepository.create(user);
     return createdUser;
