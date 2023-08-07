@@ -11,6 +11,11 @@ export interface Address {
   postalCode: string;
 }
 
+
+export enum UserRole {
+  User = 'User',
+  Admin = 'Admin',
+}
 export interface IUser extends Document, BaseModel {
   email: string;
   password: string;
@@ -18,8 +23,10 @@ export interface IUser extends Document, BaseModel {
   lastName: string;
   gender: string;
   phoneNumber: string;
+  role: UserRole;
   address: Address;
   educationExperiences?: IEducationExperience[];
+  suspended: boolean;
 }
 
 export interface IUserView extends Omit<IUser, 'password'> {}
