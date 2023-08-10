@@ -24,6 +24,12 @@ class AppBuilder {
     this.app.use(cors());
     this.app.use(helmet());
 
+    // Middleware to set the default Content-Type header to application/json
+    this.app.use((req: Request, res: Response, next: NextFunction) => {
+      res.setHeader('Content-Type', 'application/json');
+      next();
+    });
+
     // Middleware for logging requests
     this.app.use((req: Request, res: Response, next: NextFunction) => {
       logger.info(`${req.method} ${req.url}`);
